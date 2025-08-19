@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from "./icon";
 import Text from "./text";
-import {tv, type VariantProps} from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import SpinnerIcon from "../assets/icons/spinner.svg?react";
 import cx from "classnames";
 
@@ -107,7 +107,7 @@ export default function Button({
 					{
 						"pr-1": icon,
 					},
-					className
+					className,
 				),
 			})}
 			disabled={disabled as boolean}
@@ -115,7 +115,7 @@ export default function Button({
 		>
 			<Text
 				variant="label-medium"
-				className={buttonTextVariants({variant, size})}
+				className={buttonTextVariants({ variant, size })}
 			>
 				{children}
 			</Text>
@@ -123,7 +123,7 @@ export default function Button({
 				<Icon
 					svg={handling ? SpinnerIcon : icon!}
 					animate={handling}
-					className={buttonIconVariants({variant, size, handling})}
+					className={buttonIconVariants({ variant, size, handling })}
 				/>
 			)}
 		</button>
