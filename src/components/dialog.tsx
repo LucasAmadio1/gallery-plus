@@ -69,7 +69,7 @@ export function DialogContent({
     </DialogPrimitive.Portal>
   );
 }
- 
+
 export function DialogHeader({
   children,
   className,
@@ -96,7 +96,7 @@ export function DialogHeader({
 }
 
 export function DialogBody({ children, ...props }: ComponentProps<"div">) {
-  return <div>{children}</div>;
+  return <div {...props}>{children}</div>;
 }
 
 export function DialogFooter({ children, ...props }: ComponentProps<"div">) {
