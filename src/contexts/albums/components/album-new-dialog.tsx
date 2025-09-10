@@ -11,50 +11,17 @@ import {
 import Button from "../../../components/button";
 import InputText from "../../../components/input-text";
 import Text from "../../../components/text";
-import type { Photo } from "../../photos/models/photo";
 import SelectCheckboxIllustration from "../../../assets/images/select-checkbox.svg?react";
 import Skeleton from "../../../components/skeleton";
-import ImagePreview from "../../../components/image-preview";
 import PhotoImageSelectable from "../../photos/components/photo-image-selectable";
+import usePhotos from "../../photos/hooks/use-photos";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
 }
 
 export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
-  const isLoadingPhotos = false;
-  const photos: Photo[] = [
-    {
-      id: "123",
-      title: "Hello World!",
-      imageId: "square-breakfast.png",
-      albums: [
-        { id: "321", title: "Album 1" },
-        { id: "41", title: "Album 2" },
-        { id: "141", title: "Album 3" },
-      ],
-    },
-    {
-      id: "232",
-      title: "Hello World!",
-      imageId: "square-sky.png",
-      albums: [
-        { id: "321", title: "Album 1" },
-        { id: "41", title: "Album 2" },
-        { id: "141", title: "Album 3" },
-      ],
-    },
-    {
-      id: "412",
-      title: "Hello World!",
-      imageId: "wide-tree.png",
-      albums: [
-        { id: "321", title: "Album 1" },
-        { id: "41", title: "Album 2" },
-        { id: "141", title: "Album 3" },
-      ],
-    },
-  ];
+  const { photos, isLoadingPhotos } = usePhotos();
 
   function handleTogglePhoto(selected: boolean, photoId: string) {
     console.log(selected, photoId);
@@ -78,7 +45,7 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                 {photos.map((photo) => (
                   <PhotoImageSelectable
                     key={photo.id}
-                    src={`/images/${photo.imageId}`}
+                    src={`${import.meta.env.VITE_IMAGES_URL}/${photo.imageId}`}
                     title={photo.title}
                     imageClassName="w-20 h-20"
                     onSelectImage={(selected) =>
