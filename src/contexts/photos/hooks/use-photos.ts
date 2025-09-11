@@ -5,12 +5,16 @@ import { useQueryState, createSerializer, parseAsString } from "nuqs";
 
 export default function usePhotos() {
   const [albumId, setAlbumId] = useQueryState("albumId");
+  const [search, setSearch] = useQueryState("search");
 
-  const toSearchParams = createSerializer({ albumId: parseAsString });
+  const toSearchParams = createSerializer({
+    albumId: parseAsString,
+    q: parseAsString,
+  });
 
   const { data, isLoading } = useQuery<Photo[]>({
-    queryKey: ["photos", albumId],
-    queryFn: () => fetcher(`/photos${toSearchParams({ albumId })}`),
+    queryKey: ["photos", albumId, search],
+    queryFn: () => fetcher(`/photos${toSearchParams({ albumId, q: search })}`),
   });
 
   return {
@@ -19,6 +23,8 @@ export default function usePhotos() {
     filters: {
       albumId,
       setAlbumId,
+      search,
+      setSearch,
     },
   };
 }
