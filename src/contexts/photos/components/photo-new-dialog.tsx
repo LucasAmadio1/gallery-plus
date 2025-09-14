@@ -17,7 +17,7 @@ import Text from "../../../components/text";
 import Skeleton from "../../../components/skeleton";
 import { useForm } from "react-hook-form";
 import useAlbums from "../../albums/hooks/use-albums";
-import { photoNewFormSchema, type PhotoNewFormSchema } from "../../schemas";
+import { photoNewFormSchema, type PhotoNewFormSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import usePhoto from "../hooks/use-photo";
 

@@ -1,7 +1,9 @@
+import React from "react";
 import Divider from "../../../components/divider";
 import InputCheckbox from "../../../components/input-checkbox";
 import Skeleton from "../../../components/skeleton";
 import Text from "../../../components/text";
+import usePhotoAlbums from "../../photos/hooks/use-photo-albums";
 import type { Photo } from "../../photos/models/photo";
 import type { Album } from "../models/album";
 
@@ -16,11 +18,14 @@ export default function AlbumsListSelectable({
   albums,
   photo,
 }: AlbumsListSelectableProps) {
+  const { mangePhotoOnAlbum } = usePhotoAlbums();
+  const [isUpdatingPhoto, setIsUpdatingPhoto] = React.useTransition();
+
   function isChecked(albumId: string) {
     return photo?.albums?.some((album) => album.id === albumId);
   }
 
-  function handlePhotoOnAlbums(albumId: string) {
+  async function handlePhotoOnAlbums(albumId: string) {
     let albumsIds = [];
 
     if (isChecked(albumId)) {
@@ -31,12 +36,15 @@ export default function AlbumsListSelectable({
       albumsIds = [...photo.albums.map((album) => album.id), albumId];
     }
 
-    console.log(albumsIds);
+    setIsUpdatingPhoto(async () => {
+      await mangePhotoOnAlbum(photo.id, albumsIds);
+    });
   }
 
   return (
     <ul className="flex flex-col gap-4">
       {!loading &&
+        photo &&
         albums?.length > 0 &&
         albums.map((album, index) => (
           <li key={album.id}>
@@ -47,7 +55,8 @@ export default function AlbumsListSelectable({
 
               <InputCheckbox
                 defaultChecked={isChecked(album.id)}
-                onClick={() => handlePhotoOnAlbums(album.id)}
+                onChange={() => handlePhotoOnAlbums(album.id)}
+                disabled={isUpdatingPhoto}
               />
             </div>
 
